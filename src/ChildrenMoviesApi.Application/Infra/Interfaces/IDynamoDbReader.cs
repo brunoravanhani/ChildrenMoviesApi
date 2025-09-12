@@ -1,6 +1,6 @@
 using Amazon.DynamoDBv2.Model;
 
-namespace ChildrenMoviesApi.Infra.Interfaces;
+namespace ChildrenMoviesApi.Application.Infra.Interfaces;
 
 public interface IDynamoDbReader : IDisposable
 {

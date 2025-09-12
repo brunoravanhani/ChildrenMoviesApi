@@ -1,9 +1,8 @@
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
-using Amazon.Lambda.Core;
-using ChildrenMoviesApi.Infra.Interfaces;
+using ChildrenMoviesApi.Application.Infra.Interfaces;
 
-namespace ChildrenMoviesApi.Infra;
+namespace ChildrenMoviesApi.Application.Infra;
 
 public class DynamoDBReader : IDynamoDbReader
 {

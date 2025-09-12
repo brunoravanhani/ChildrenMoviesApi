@@ -1,4 +1,4 @@
-namespace ChildrenMoviesApi.Models;
+namespace ChildrenMoviesApi.Application.Models;
 
 public class StreamService
 {

@@ -1,0 +1,6 @@
+@ChildrenMoviesApi.Api_HostAddress = http://localhost:5226
+
+GET {{ChildrenMoviesApi.Api_HostAddress}}/
+Accept: application/json
+
+###

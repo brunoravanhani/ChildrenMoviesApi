@@ -1,18 +1,15 @@
 using Amazon.DynamoDBv2;
-using Amazon.Lambda.Core;
-using ChildrenMoviesApi.Infra.Interfaces;
+using ChildrenMoviesApi.Application.Infra.Interfaces;
 
-namespace ChildrenMoviesApi.Infra;
+namespace ChildrenMoviesApi.Application.Infra;
 
 public class ContextFactory : IDisposable
 {
-    private readonly ILambdaContext _context;
     private readonly IDynamoDbReader _dynamoDbReader;
     public IMovieRepository MovieRepository { get; }
 
-    public ContextFactory(ILambdaContext context)
+    public ContextFactory()
     {
-        _context = context; 
 
         var dynamoDBClient = new AmazonDynamoDBClient();
         _dynamoDbReader = new DynamoDBReader(dynamoDBClient);

@@ -1,6 +1,8 @@
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
-using ChildrenMoviesApi.Models;
+using ChildrenMoviesApi.Application.Models;
+
+namespace ChildrenMoviesApi.Application.Mappers;
 
 public static class MovieDocumentMapper
 {

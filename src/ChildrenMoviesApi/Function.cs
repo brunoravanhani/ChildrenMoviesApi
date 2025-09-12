@@ -1,7 +1,9 @@
 using Amazon.Lambda.Core;
 using Amazon.Lambda.Serialization.SystemTextJson;
-using ChildrenMoviesApi.Models;
-using ChildrenMoviesApi.Infra;
+using ChildrenMoviesApi.Application.Models;
+using ChildrenMoviesApi.Application.Logging;
+using ChildrenMoviesApi.Application.Intefaces;
+using ChildrenMoviesApi.Application.Services;
 
 [assembly: LambdaSerializer(typeof(DefaultLambdaJsonSerializer))]
 namespace ChildrenMoviesApi;
@@ -11,25 +13,9 @@ public class Function
 
     public async Task<IEnumerable<Movie>> FunctionHandler(ILambdaContext context)
     {
-        try
-        {
-            context?.Logger.LogInformation("Setting up context");
+        ILogger logger = new Logging.LambdaLogger(context);
+        IMoviesApplication application = new MoviesApplication(logger);
 
-            using var dbContext = new ContextFactory(context);
-
-            context?.Logger.LogInformation("Querying data");
-
-            var movies = await dbContext.MovieRepository.GetAll(context);
-
-            context?.Logger.LogInformation($"Found {movies.Count()} items");
-
-            return movies;
-        }
-        catch (Exception e)
-        {
-            context.Logger.LogWarning(e, "Error executing query");
-            return [];
-        }
-
+        return await application.QueryMovies();
     }
 }
