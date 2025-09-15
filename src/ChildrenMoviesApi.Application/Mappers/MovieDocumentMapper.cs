@@ -46,7 +46,7 @@ public static class MovieDocumentMapper
 
     private static IEnumerable<string> TryGetStringList(this Document doc, string key)
     {
-        if (doc.TryGetValue(key, out var entry) && entry is DynamoDBList list)
+        if (doc.TryGetValue(key, out var entry) && entry is PrimitiveList list)
         {
             return list.Entries
                        .Where(e => e != null)
