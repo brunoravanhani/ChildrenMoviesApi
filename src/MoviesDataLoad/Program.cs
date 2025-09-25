@@ -9,14 +9,42 @@ using System.Reflection;
 internal class Program
 {
 
-    private const string tableName = "children-movies-database";
     private static async Task Main(string[] args)
     {
+        string tableName;
+
+        if (args.Length > 0)
+        {
+            Console.WriteLine($"table name: {args[0]}");
+            tableName = args[0];
+        }
+        else
+        {
+            Console.WriteLine("Error: any table name received");
+            return;
+        }
+
         Console.WriteLine("Initializing Setup");
 
         AmazonDynamoDBConfig clientConfig = new AmazonDynamoDBConfig();
         clientConfig.RegionEndpoint = RegionEndpoint.USEast1;
         var client = new AmazonDynamoDBClient(clientConfig);
+
+        Console.WriteLine("Check if table is empty");
+
+        var scanRequest = new ScanRequest
+        {
+            TableName = tableName,
+            Select = Select.COUNT
+        };
+
+        var response = await client.ScanAsync(scanRequest);
+
+        if (response.Count > 0)
+        {
+            Console.WriteLine("Error: Table is not empty. Finishing...");
+            return;
+        }
 
         Console.WriteLine("Reading data.json file");
 
