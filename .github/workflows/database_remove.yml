@@ -1,4 +1,4 @@
-name: Deploy Database
+name: Destroy Database
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ permissions:
       contents: read
 
 jobs:
-  CreateDatabaseTerraform:
+  DestroyDatabaseTerraform:
     runs-on: ubuntu-latest
     environment: PROD
     steps:
@@ -60,4 +60,4 @@ jobs:
         run: |
           cd terraform
           cd database
-          terraform apply -auto-approve -input=false
+          terraform destroy -auto-approve -input=false
