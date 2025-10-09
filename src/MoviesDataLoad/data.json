@@ -868,7 +868,7 @@
             "name": "Kung Fu Panda",
             "image": "https://image.tmdb.org/t/p/w1280/6figomnwyiUa2ErqK8QangIAO6c.jpg",
             "description": "Po é um panda que trabalha na loja de macarrão da sua família e sonha em transformar-se em um mestre de kung fu. Seu sonho se torna realidade quando, inesperadamente, ele deve cumprir uma profecia antiga e estudar a arte marcial com seus ídolos, os Cinco Furiosos. Po precisa de toda a sabedoria, força e habilidade que conseguir reunir para proteger seu povo de um leopardo da neve malvado.",
-            "year": "2008",
+            "year": 2008,
             "type": "animated-movie",
             "streams": [
                 {
@@ -885,7 +885,7 @@
             "name": "Kung Fu Panda 3",
             "image": "https://image.tmdb.org/t/p/w1280/pXYJjUNtnLfXVKGmqi1nfGornri.jpg",
             "description": "Em uma visita a uma vila secreta com o pai, Po forma um exército de pandas para combater um espírito maligno que ameaça a China.",
-            "year": "2016",
+            "year": 2016,
             "type": "animated-movie",
             "streams": [
                 {
@@ -1275,7 +1275,7 @@
             "name": "Kung Fu Panda 2",
             "image": "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/mgypa5hjjr2QXiaa5MwPlQuh3oe.jpg",
             "description": "Po vive o sonho de ser o dragão guerreiro, protegendo o Vale da Paz ao lado dos mestres Shifu, Tigresa, Macaco, Víbora, Louva-deus e Garça. Sua vida pacata chega ao fim quando surge um novo inimigo, o lorde Chen, que possui uma arma secreta capaz de permitir a conquista da China e provocar o fim do kung fu. Para impedi-lo, Po e os Cinco Furiosos precisam cruzar o país e derrotá-lo.",
-            "year": "2011",
+            "year": 2011,
             "type": "animated-movie",
             "streams": [
                 {
@@ -1292,7 +1292,7 @@
             "name": "Kung Fu Panda 4",
             "image": "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/vU5MZaZfdl6P7SRHGjpWYiNYa1t.jpg",
             "description": "Po está prestes a se tornar o novo líder espiritual do Vale da Paz, mas antes que possa fazer isso, ele deve encontrar um sucessor para se tornar o novo Dragão Guerreiro. Ele parece encontrar uma em Zhen, uma raposa com muitas habilidades promissoras, mas que não gosta muito da ideia de Po treiná-la.",
-            "year": "2024",
+            "year": 2024,
             "type": "animated-movie",
             "streams": [
                 {
