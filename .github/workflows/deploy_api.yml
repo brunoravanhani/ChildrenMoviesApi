@@ -1,0 +1,65 @@
+name: Deploy Api Lambda
+
+on:
+  workflow_dispatch:
+
+env:
+  
+  AWS_REGION : us-east-1
+
+permissions:
+      id-token: write  
+      contents: read
+
+jobs:
+  DeployLambda:
+    runs-on: ubuntu-latest
+    environment: PROD
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Docker build
+        run: |
+          docker build -t childrenmoviesapi .
+
+      - name: Docker Tag
+        run: |
+          docker tag childrenmoviesapi:latest ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-1.amazonaws.com/childrenmoviesapi:latest
+      
+      - name: Docker Push
+        run: |
+          docker push ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-1.amazonaws.com/childrenmoviesapi:latest
+      
+      # - name: Lambda create
+      #   run: |
+      #     aws lambda create-function --function-name ChildrenMoviesApi --package-type Image --code ImageUri=${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-1.amazonaws.com/childrenmoviesapi:latest --role arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/terraform_aws_lambda_role
+
+      # - name: Lambda update
+      #   run: |
+      #     aws lambda update-function-code --function-name ChildrenMoviesApi --image-uri ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-1.amazonaws.com/childrenmoviesapi:latest
+
+      - name: Deploy Lambda
+        run: |
+          FUNCTION_NAME="ChildrenMoviesApi"
+          IMAGE_URI="${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-1.amazonaws.com/childrenmoviesapi:latest"
+          
+          
+          if aws lambda get-function --function-name $FUNCTION_NAME > /dev/null 2>&1; then
+            echo "Lambda already exists. Updating..."
+            aws lambda update-function-code \
+              --function-name $FUNCTION_NAME \
+              --image-uri $IMAGE_URI
+          else
+            echo "Lambda doesn't exists. Creating..."
+            aws lambda create-function \
+              --function-name $FUNCTION_NAME \
+              --package-type Image \
+              --code ImageUri=$IMAGE_URI \
+              --role arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/terraform_aws_lambda_role
+          fi
