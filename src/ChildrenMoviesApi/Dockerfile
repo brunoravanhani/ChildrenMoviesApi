@@ -2,12 +2,14 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Copia apenas os csproj primeiro (cache eficiente)
-COPY *.csproj ./
+COPY *.sln ./
+COPY ChildrenMoviesApi/*.csproj ./ChildrenMoviesApi/
+COPY ChildrenMoviesApi.Application/*.csproj ./ChildrenMoviesApi.Application/
+
 RUN dotnet restore
 
 # Copia o restante dos arquivos
-COPY . ./
+COPY . .
 
 # Publica
 RUN dotnet publish -c Release -o /app --no-restore
