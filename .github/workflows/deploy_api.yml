@@ -26,7 +26,7 @@ jobs:
 
       - name: Docker build
         run: |
-          docker build -t childrenmoviesapi src/ChildrenMoviesApi
+          docker build -t childrenmoviesapi .
 
       - name: Docker Tag
         run: |
