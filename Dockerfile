@@ -10,10 +10,8 @@ COPY src/MoviesDataLoad/*.csproj ./MoviesDataLoad/
 
 COPY . .
 
-RUN dotnet restore
-
 WORKDIR /app/ChildrenMoviesApi
-RUN dotnet publish "ChildrenMoviesApi.csproj" -c Release -o /app --no-restore
+RUN dotnet publish "ChildrenMoviesApi.csproj" -c Release -o /app 
 
 # Etapa final - imagem Lambda
 FROM public.ecr.aws/lambda/dotnet:9 AS runtime
