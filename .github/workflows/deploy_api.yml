@@ -67,3 +67,14 @@ jobs:
               --code ImageUri=$IMAGE_URI \
               --role arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/terraform_aws_lambda_role
           fi
+      - name: Function URL
+        run: |
+          FUNCTION_NAME="ChildrenMoviesApi"
+          IMAGE_URI="${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-1.amazonaws.com/childrenmoviesapi:latest"
+          
+          
+          aws lambda create-function-url-config \
+            --function-name  $FUNCTION_NAME \
+            --auth-type NONE \
+            --region ${{ env.AWS_REGION }} \
+            --cors-configuration '{"AllowOrigins":["*"], "AllowMethods":["GET"], "AllowHeaders":["*"]}'
