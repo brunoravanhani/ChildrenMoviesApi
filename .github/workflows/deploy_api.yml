@@ -72,7 +72,6 @@ jobs:
           FUNCTION_NAME="ChildrenMoviesApi"
           IMAGE_URI="${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-1.amazonaws.com/childrenmoviesapi:latest"
           
-          
           aws lambda create-function-url-config \
             --function-name  $FUNCTION_NAME \
             --auth-type NONE \
