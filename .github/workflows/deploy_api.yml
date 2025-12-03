@@ -74,5 +74,4 @@ jobs:
           aws lambda create-function-url-config \
             --function-name  $FUNCTION_NAME \
             --auth-type NONE \
-            --region ${{ env.AWS_REGION }} \
-            --cors-configuration '{"AllowOrigins":["*"], "AllowMethods":["GET"], "AllowHeaders":["*"]}'
+            --region ${{ env.AWS_REGION }}
