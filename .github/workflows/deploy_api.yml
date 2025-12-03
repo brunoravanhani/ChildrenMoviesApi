@@ -53,8 +53,9 @@ jobs:
           FUNCTION_NAME="ChildrenMoviesApi"
           IMAGE_URI="${{ secrets.AWS_ACCOUNT }}.dkr.ecr.us-east-1.amazonaws.com/childrenmoviesapi:latest"
           
-          
-          if aws lambda get-function --function-name $FUNCTION_NAME > /dev/null 2>&1; then
+          aws lambda get-function --function-name $FUNCTION_NAME > /dev/null 2>&1
+
+          if [ $? -eq 0 ]; then
             echo "Lambda already exists. Updating..."
             aws lambda update-function-code \
               --function-name $FUNCTION_NAME \
