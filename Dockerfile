@@ -20,4 +20,4 @@ WORKDIR /var/task
 COPY --from=build /app /var/task
 
 # Handler configurado
-CMD ["ChildrenMoviesApi::ChildrenMoviesApi.Function::FunctionHandler"]
+CMD ["ChildrenMoviesApi1::ChildrenMoviesApi1.Function1::FunctionHandler1"]
