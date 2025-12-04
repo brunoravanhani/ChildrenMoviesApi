@@ -11,7 +11,7 @@
   "function-runtime": "provided.al2023",
   "function-memory-size": 512,
   "function-timeout": 30,
-  "function-handler": "ChildrenMoviesApi2::ChildrenMoviesApi2.Function2::FunctionHandler2",
+  "image-command": "ChildrenMoviesApi.Function::FunctionHandler",
   "msbuild-parameters": "--self-contained true",
   "package-type": "image"
 }
