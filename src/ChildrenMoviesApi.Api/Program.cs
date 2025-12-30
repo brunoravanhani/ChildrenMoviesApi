@@ -1,6 +1,7 @@
 using ChildrenMoviesApi.Api.Logging;
 using ChildrenMoviesApi.Application.Intefaces;
 using ChildrenMoviesApi.Application.Services;
+using ChildrenMoviesApi.Domain.Configuration;
 
 internal class Program
 {
@@ -11,6 +12,8 @@ internal class Program
         // Add services to the container.
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
+
+        builder.Services.Configure<AwsCredentials>(builder.Configuration.GetSection("Aws"));
 
         builder.Services.AddScoped<ChildrenMoviesApi.Application.Logging.ILogger, CustomLogger>();
         builder.Services.AddScoped<IMoviesApplication, MoviesApplication>();

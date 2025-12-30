@@ -4,6 +4,7 @@ WORKDIR /src
 COPY *.sln ./
 
 COPY src/ChildrenMoviesApi.Application/*.csproj src/ChildrenMoviesApi.Application/
+COPY src/ChildrenMoviesApi.Domain/*.csproj src/ChildrenMoviesApi.Domain/
 COPY src/ChildrenMoviesApi.Api/*.csproj src/ChildrenMoviesApi.Api/
 COPY src/ChildrenMoviesApi/*.csproj src/ChildrenMoviesApi/
 COPY src/MoviesDataLoad/*.csproj src/MoviesDataLoad/

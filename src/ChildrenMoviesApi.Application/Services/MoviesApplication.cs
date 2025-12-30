@@ -2,16 +2,20 @@ using ChildrenMoviesApi.Application.Infra;
 using ChildrenMoviesApi.Application.Intefaces;
 using ChildrenMoviesApi.Application.Logging;
 using ChildrenMoviesApi.Application.Models;
+using ChildrenMoviesApi.Domain.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace ChildrenMoviesApi.Application.Services;
 
 public class MoviesApplication : IMoviesApplication
 {
     private readonly ILogger _logger;
+    private readonly AwsCredentials _awsCredentials;
 
-    public MoviesApplication(ILogger logger)
+    public MoviesApplication(ILogger logger, IOptions<AwsCredentials> awsCredentials)
     {
         _logger = logger;
+        _awsCredentials = awsCredentials.Value;
     }
 
     public async Task<IEnumerable<Movie>> QueryMovies()
@@ -20,7 +24,7 @@ public class MoviesApplication : IMoviesApplication
         {
             _logger.LogInformation("Setting up context");
 
-            using var dbContext = new ContextFactory();
+            using var dbContext = new ContextFactory(_awsCredentials);
 
             _logger.LogInformation("Querying data");
 
