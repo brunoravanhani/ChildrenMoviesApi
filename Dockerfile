@@ -1,23 +1,28 @@
-# Etapa de build
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-WORKDIR /app
+WORKDIR /src
 
 COPY *.sln ./
-COPY src/ChildrenMoviesApi/*.csproj ./ChildrenMoviesApi/
-COPY src/ChildrenMoviesApi.Application/*.csproj ./ChildrenMoviesApi.Application/
-COPY src/ChildrenMoviesApi.Api/*.csproj ./ChildrenMoviesApi.Api/
-COPY src/MoviesDataLoad/*.csproj ./MoviesDataLoad/
 
-COPY . .
+COPY src/ChildrenMoviesApi.Application/*.csproj src/ChildrenMoviesApi.Application/
+COPY src/ChildrenMoviesApi.Api/*.csproj src/ChildrenMoviesApi.Api/
+COPY src/ChildrenMoviesApi/*.csproj src/ChildrenMoviesApi/
+COPY src/MoviesDataLoad/*.csproj src/MoviesDataLoad/
+COPY test/ChildrenMoviesApi.Tests/*.csproj test/ChildrenMoviesApi.Tests/
 
-WORKDIR /app/ChildrenMoviesApi
-RUN dotnet publish "ChildrenMoviesApi.csproj" -c Release -o /app 
+RUN dotnet restore
 
-# Etapa final - imagem Lambda
-FROM public.ecr.aws/lambda/dotnet:9 AS runtime
-WORKDIR /var/task
+COPY src/ ./src/
 
-COPY --from=build /app /var/task
+WORKDIR /src/src/ChildrenMoviesApi.Api
+RUN dotnet publish -c Release -o /app/publish --no-restore
 
-# Handler configurado
-CMD ["ChildrenMoviesApi::ChildrenMoviesApi.Function::FunctionHandler"]
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+WORKDIR /app
+
+COPY --from=build /app/publish .
+
+EXPOSE 8080
+
+ENV ASPNETCORE_URLS=http://+:8080
+
+ENTRYPOINT ["dotnet", "ChildrenMoviesApi.Api.dll"]
