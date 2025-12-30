@@ -1,5 +1,7 @@
 using Amazon.DynamoDBv2;
+using Amazon.Runtime;
 using ChildrenMoviesApi.Application.Infra.Interfaces;
+using ChildrenMoviesApi.Domain.Configuration;
 
 namespace ChildrenMoviesApi.Application.Infra;
 
@@ -8,11 +10,20 @@ public class ContextFactory : IDisposable
     private readonly IDynamoDbReader _dynamoDbReader;
     public IMovieRepository MovieRepository { get; }
 
-    public ContextFactory()
+    public ContextFactory(AwsCredentials awsCredentials)
     {
 
-        var dynamoDBClient = new AmazonDynamoDBClient();
-        _dynamoDbReader = new DynamoDBReader(dynamoDBClient);
+        if (!string.IsNullOrEmpty(awsCredentials.AccessKey)
+            && !string.IsNullOrEmpty(awsCredentials.SecretKey))
+        {
+            var awsBasicCredentials = new BasicAWSCredentials(awsCredentials.AccessKey, awsCredentials.SecretKey);
+            var dynamoDBClient = new AmazonDynamoDBClient(awsBasicCredentials, Amazon.RegionEndpoint.USEast1);
+            _dynamoDbReader = new DynamoDBReader(dynamoDBClient);
+        } 
+        else
+        {
+            _dynamoDbReader = new DynamoDBReader(new AmazonDynamoDBClient());
+        }
 
         MovieRepository = new MovieRepository(_dynamoDbReader);
     }
