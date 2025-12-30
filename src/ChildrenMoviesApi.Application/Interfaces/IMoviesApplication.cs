@@ -1,4 +1,4 @@
-using ChildrenMoviesApi.Application.Models;
+using ChildrenMoviesApi.Domain.Entity;
 
 namespace ChildrenMoviesApi.Application.Intefaces;
 

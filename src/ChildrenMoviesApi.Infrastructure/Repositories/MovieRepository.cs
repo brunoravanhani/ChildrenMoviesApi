@@ -1,9 +1,10 @@
 using Amazon.DynamoDBv2.Model;
-using ChildrenMoviesApi.Application.Infra.Interfaces;
-using ChildrenMoviesApi.Application.Mappers;
-using ChildrenMoviesApi.Application.Models;
+using ChildrenMoviesApi.Domain.Interfaces;
+using ChildrenMoviesApi.Infrastructure.Mappers;
+using ChildrenMoviesApi.Infrastructure.Interfaces;
+using ChildrenMoviesApi.Domain.Entity;
 
-namespace ChildrenMoviesApi.Application.Infra;
+namespace ChildrenMoviesApi.Infrastructure.Repositories;
 
 public class MovieRepository : IMovieRepository
 {

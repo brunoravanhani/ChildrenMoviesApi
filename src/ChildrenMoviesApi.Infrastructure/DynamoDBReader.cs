@@ -1,6 +1,6 @@
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
-using ChildrenMoviesApi.Application.Infra.Interfaces;
+using ChildrenMoviesApi.Infrastructure.Interfaces;
 
 namespace ChildrenMoviesApi.Application.Infra;
 

@@ -1,7 +1,9 @@
 using Amazon.DynamoDBv2;
 using Amazon.Runtime;
-using ChildrenMoviesApi.Application.Infra.Interfaces;
+using ChildrenMoviesApi.Infrastructure.Interfaces;
+using ChildrenMoviesApi.Infrastructure.Repositories;
 using ChildrenMoviesApi.Domain.Configuration;
+using ChildrenMoviesApi.Domain.Interfaces;
 
 namespace ChildrenMoviesApi.Application.Infra;
 

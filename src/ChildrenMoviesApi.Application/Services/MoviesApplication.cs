@@ -1,7 +1,7 @@
 using ChildrenMoviesApi.Application.Infra;
 using ChildrenMoviesApi.Application.Intefaces;
 using ChildrenMoviesApi.Application.Logging;
-using ChildrenMoviesApi.Application.Models;
+using ChildrenMoviesApi.Domain.Entity;
 using ChildrenMoviesApi.Domain.Configuration;
 using Microsoft.Extensions.Options;
 
