@@ -14,16 +14,23 @@ public class MovieRepository : IMovieRepository
 
     public MovieRepository(IDynamoDbReader dynamoReader)
     {
-
         _dynamoReader = dynamoReader;
     }
 
     public async Task<IEnumerable<Movie>> GetAll()
     {
-
         List<Dictionary<string, AttributeValue>> items = await _dynamoReader.ScanAsync(TableName);
 
         var movies = items.Select(MovieDocumentMapper.ToMovie).ToList();
+
+        return movies;
+    }
+
+    public async Task<Movie> Get(int id)
+    {
+        var movieItem = await _dynamoReader.GetItemAsync(TableName, id);
+
+        var movies = MovieDocumentMapper.ToMovie(movieItem);
 
         return movies;
     }

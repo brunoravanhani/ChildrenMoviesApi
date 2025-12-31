@@ -6,6 +6,8 @@ namespace ChildrenMoviesApi.Application.Infra;
 
 public class DynamoDBReader : IDynamoDbReader
 {
+    private const string PartitionKeyDefault = "id";
+
     private bool disposed = false;
     private readonly IAmazonDynamoDB _dynamoDBClient;
 
@@ -24,6 +26,25 @@ public class DynamoDBReader : IDynamoDbReader
         var response = await _dynamoDBClient.ScanAsync(scanRequest);
 
         return response.Items;
+    }
+
+    public async Task<Dictionary<string, AttributeValue>> GetItemAsync(string tableName, int id)
+    {
+        var key = new Dictionary<string, AttributeValue>
+        {
+            { PartitionKeyDefault, new AttributeValue { S = id.ToString() } }
+        };
+
+        var request = new GetItemRequest
+        {
+            TableName = tableName,
+            Key = key,
+            ConsistentRead = false
+        };
+
+        var response = await _dynamoDBClient.GetItemAsync(request);
+
+        return response.Item;
     }
     
     public void Dispose()

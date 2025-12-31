@@ -40,4 +40,50 @@ public class MoviesApplication : IMoviesApplication
             return [];
         }
     }
+
+    public async Task<Movie> GetMovie(int id)
+    {
+        try
+        {
+            _logger.LogInformation("Setting up context");
+
+            using var dbContext = new ContextFactory(_awsCredentials);
+
+            _logger.LogInformation("Querying data");
+
+            var movie = await dbContext.MovieRepository.Get(id);
+
+            _logger.LogInformation($"Found movie {movie.Name}");
+
+            return movie;
+
+        }
+        catch (Exception e)
+        {
+            _logger.LogWarning(e, "Error executing query");
+            throw;
+        }
+    }
+
+    public async Task SaveMovie(Movie movie)
+    {
+        try
+        {
+            _logger.LogInformation("Setting up context");
+
+            using var dbContext = new ContextFactory(_awsCredentials);
+
+            _logger.LogInformation("Querying data");
+
+            var movies = await dbContext.MovieRepository.GetAll();
+
+            _logger.LogInformation($"Found {movies.Count()} items");
+
+        }
+        catch (Exception e)
+        {
+            _logger.LogWarning(e, "Error executing query");
+            throw;
+        }
+    }
 }
