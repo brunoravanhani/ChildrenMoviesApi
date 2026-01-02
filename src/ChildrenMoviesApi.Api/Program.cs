@@ -10,6 +10,7 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.Configure<AwsCredentials>(builder.Configuration.GetSection("Aws"));
+        builder.Services.Configure<DatabaseTables>(builder.Configuration.GetSection("Database"));
 
         builder.Services.AddScoped<ChildrenMoviesApi.Application.Logging.ILogger, CustomLogger>();
         builder.Services.AddScoped<IMoviesApplication, MoviesApplication>();

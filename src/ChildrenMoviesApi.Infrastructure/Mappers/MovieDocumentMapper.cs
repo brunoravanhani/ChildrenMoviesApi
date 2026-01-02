@@ -12,7 +12,7 @@ public static class MovieDocumentMapper
 
         var movie = new Movie
         {
-            Id = doc.TryGetInt("id") ?? 0,
+            Id = doc.TryGetGuid("id") ?? Guid.Empty,
             Name = doc.TryGetString("name"),
             Image = doc.TryGetString("image"),
             Description = doc.TryGetString("description"),
@@ -29,13 +29,13 @@ public static class MovieDocumentMapper
     {
         var item = new Dictionary<string, AttributeValue>
         {
-            { "id", new AttributeValue { N = movie.Id.ToString() } },
+            { "id", new AttributeValue { S = movie.Id.ToString() } },
             { "name", new AttributeValue { S = movie.Name } },
             { "image", new AttributeValue { S = movie.Image } },
             { "description", new AttributeValue { S = movie.Description } },
             { "year", new AttributeValue { N = movie.Year.ToString() } },
             { "type", new AttributeValue { S = movie.Type } },
-            { "Streams", new AttributeValue { 
+            { "streams", new AttributeValue { 
                 L = MapSteamsToDynamo(movie.Streams)} 
             },
             { "tags", new AttributeValue { SS =  movie.Tags.ToList()  } },
@@ -47,10 +47,15 @@ public static class MovieDocumentMapper
     // --- helpers seguros ---
     private static string GetString(this DynamoDBEntry entry) =>
         entry?.AsString();
-
+    
     private static string TryGetString(this Document doc, string key)
     {
         return doc.TryGetValue(key, out var entry) ? entry.GetString() : null;
+    }
+
+    private static Guid? TryGetGuid(this Document doc, string key)
+    {
+        return doc.TryGetValue(key, out var entry) ? Guid.Parse(entry.GetString()) : null;
     }
 
     private static int? TryGetInt(this Document doc, string key)
@@ -77,7 +82,9 @@ public static class MovieDocumentMapper
 
     private static IEnumerable<StreamService> TryGetStreams(this Document doc, string key)
     {
-        if (doc.TryGetValue(key, out var entry) && entry is DynamoDBList list)
+        doc.TryGetValue(key, out var entry);
+
+        if (entry is DynamoDBList list)
         {
             return list.Entries
                        .OfType<Document>()

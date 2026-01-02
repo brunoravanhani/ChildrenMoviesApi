@@ -3,6 +3,7 @@ using ChildrenMoviesApi.Domain.Interfaces;
 using ChildrenMoviesApi.Infrastructure.Mappers;
 using ChildrenMoviesApi.Infrastructure.Interfaces;
 using ChildrenMoviesApi.Domain.Entity;
+using ChildrenMoviesApi.Domain.Configuration;
 
 namespace ChildrenMoviesApi.Infrastructure.Repositories;
 
@@ -10,11 +11,12 @@ public class MovieRepository : IMovieRepository
 {
 
     private readonly IDynamoDbReader _dynamoReader;
-    private const string TableName = "children-movies-database";
+    private readonly string TableName;
 
-    public MovieRepository(IDynamoDbReader dynamoReader)
+    public MovieRepository(IDynamoDbReader dynamoReader, DatabaseTables databaseTables)
     {
         _dynamoReader = dynamoReader;
+        TableName = databaseTables.Movie;   
     }
 
     public async Task<IEnumerable<Movie>> GetAll()
@@ -26,7 +28,7 @@ public class MovieRepository : IMovieRepository
         return movies;
     }
 
-    public async Task<Movie> Get(int id)
+    public async Task<Movie> Get(Guid id)
     {
         var movieItem = await _dynamoReader.GetItemAsync(TableName, id);
 

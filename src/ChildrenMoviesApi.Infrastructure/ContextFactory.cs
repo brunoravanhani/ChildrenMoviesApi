@@ -12,7 +12,7 @@ public class ContextFactory : IDisposable
     private readonly IDynamoDbReader _dynamoDbReader;
     public IMovieRepository MovieRepository { get; }
 
-    public ContextFactory(AwsCredentials awsCredentials)
+    public ContextFactory(AwsCredentials awsCredentials, DatabaseTables databaseTables)
     {
 
         if (!string.IsNullOrEmpty(awsCredentials.AccessKey)
@@ -27,7 +27,7 @@ public class ContextFactory : IDisposable
             _dynamoDbReader = new DynamoDBReader(new AmazonDynamoDBClient());
         }
 
-        MovieRepository = new MovieRepository(_dynamoDbReader);
+        MovieRepository = new MovieRepository(_dynamoDbReader, databaseTables);
     }
 
     private bool disposed = false;

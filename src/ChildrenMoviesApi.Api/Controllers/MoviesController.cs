@@ -25,7 +25,7 @@ public class MoviesController : ControllerBase
     } 
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get(int id)
+    public async Task<IActionResult> Get(Guid id)
     {
         var movie = await _moviesApplication.GetMovie(id);
 
@@ -36,6 +36,14 @@ public class MoviesController : ControllerBase
     public async Task<IActionResult> Post([FromBody] Movie movie)
     {
         await _moviesApplication.SaveMovie(movie);
+
+        return Ok($"Movie {movie.Name} added successfully");
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Guid id, [FromBody] Movie movie)
+    {
+        await _moviesApplication.UpdateMovie(id, movie);
 
         return Ok($"Movie {movie.Name} added successfully");
     } 

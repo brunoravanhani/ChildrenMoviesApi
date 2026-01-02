@@ -29,7 +29,7 @@ public class DynamoDBReader : IDynamoDbReader
         return response.Items;
     }
 
-    public async Task<Dictionary<string, AttributeValue>> GetItemAsync(string tableName, int id)
+    public async Task<Dictionary<string, AttributeValue>> GetItemAsync(string tableName, Guid id)
     {
         var key = new Dictionary<string, AttributeValue>
         {
