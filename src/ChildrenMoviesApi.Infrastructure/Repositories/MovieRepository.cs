@@ -34,4 +34,11 @@ public class MovieRepository : IMovieRepository
 
         return movies;
     }
+
+    public async Task<bool> Save(Movie movie)
+    {
+        var result = await _dynamoReader.PutItemAsync(TableName, movie.ToDynamoObject());
+
+        return result;
+    }
 }

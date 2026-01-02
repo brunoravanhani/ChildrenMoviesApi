@@ -25,6 +25,25 @@ public static class MovieDocumentMapper
         return movie;
     }
 
+    public static Dictionary<string, AttributeValue> ToDynamoObject(this Movie movie)
+    {
+        var item = new Dictionary<string, AttributeValue>
+        {
+            { "id", new AttributeValue { N = movie.Id.ToString() } },
+            { "name", new AttributeValue { S = movie.Name } },
+            { "image", new AttributeValue { S = movie.Image } },
+            { "description", new AttributeValue { S = movie.Description } },
+            { "year", new AttributeValue { N = movie.Year.ToString() } },
+            { "type", new AttributeValue { S = movie.Type } },
+            { "Streams", new AttributeValue { 
+                L = MapSteamsToDynamo(movie.Streams)} 
+            },
+            { "tags", new AttributeValue { SS =  movie.Tags.ToList()  } },
+        };
+
+        return item;
+    }
+
     // --- helpers seguros ---
     private static string GetString(this DynamoDBEntry entry) =>
         entry?.AsString();
@@ -70,5 +89,20 @@ public static class MovieDocumentMapper
                        .ToList();
         }
         return Enumerable.Empty<StreamService>();
+    }
+
+    private static List<AttributeValue> MapSteamsToDynamo(IEnumerable<StreamService> streams)
+    {
+        return streams.Select(s =>
+        {
+           return new AttributeValue
+           {
+               M = new Dictionary<string, AttributeValue>
+               {
+                   { "name", new AttributeValue { S = s.Name } },
+                   { "link", new AttributeValue { S = s.Link } },
+               } 
+           };
+        }).ToList();
     }
 }

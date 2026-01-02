@@ -73,16 +73,23 @@ public class MoviesApplication : IMoviesApplication
 
             using var dbContext = new ContextFactory(_awsCredentials);
 
-            _logger.LogInformation("Querying data");
+            _logger.LogInformation("Saving data");
 
-            var movies = await dbContext.MovieRepository.GetAll();
+            var result = await dbContext.MovieRepository.Save(movie);
 
-            _logger.LogInformation($"Found {movies.Count()} items");
+            if (result)
+            {
+                _logger.LogInformation($"Saved Movie {movie.Name}");
+                return;
+            }
+
+            throw new Exception("Error when saving Movie");
+
 
         }
         catch (Exception e)
         {
-            _logger.LogWarning(e, "Error executing query");
+            _logger.LogWarning(e, "Error executing Save");
             throw;
         }
     }

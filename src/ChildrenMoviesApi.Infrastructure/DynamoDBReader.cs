@@ -1,3 +1,4 @@
+using System.Net;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
 using ChildrenMoviesApi.Infrastructure.Interfaces;
@@ -45,6 +46,20 @@ public class DynamoDBReader : IDynamoDbReader
         var response = await _dynamoDBClient.GetItemAsync(request);
 
         return response.Item;
+    }
+
+    public async Task<bool> PutItemAsync(string tableName, Dictionary<string, AttributeValue> data)
+    {
+
+        var putItemRequest = new PutItemRequest
+        {
+            TableName = tableName,
+            Item = data
+        };
+
+        PutItemResponse response = await _dynamoDBClient.PutItemAsync(putItemRequest);
+
+        return response.HttpStatusCode == HttpStatusCode.OK;
     }
     
     public void Dispose()

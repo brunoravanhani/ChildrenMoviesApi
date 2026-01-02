@@ -1,4 +1,5 @@
 using ChildrenMoviesApi.Application.Intefaces;
+using ChildrenMoviesApi.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChildrenMoviesApi.Api.Controllers;
@@ -29,5 +30,13 @@ public class MoviesController : ControllerBase
         var movie = await _moviesApplication.GetMovie(id);
 
         return Ok(movie);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] Movie movie)
+    {
+        await _moviesApplication.SaveMovie(movie);
+
+        return Ok($"Movie {movie.Name} added successfully");
     } 
 }
