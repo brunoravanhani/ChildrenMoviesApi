@@ -18,7 +18,7 @@ resource "aws_dynamodb_table" "table_creation" {
 
   attribute {
     name = "id"
-    type = "N"
+    type = "S"
   }
 }
 
