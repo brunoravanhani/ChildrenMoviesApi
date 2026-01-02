@@ -58,7 +58,7 @@ internal class Program
         {
             var item = new Dictionary<string, AttributeValue>
             {
-                ["id"] = new AttributeValue { N = movie.Id.ToString() },
+                ["id"] = new AttributeValue { S = Guid.NewGuid().ToString() },
                 ["name"] = new AttributeValue { S = movie.Name },
                 ["image"] = new AttributeValue { S = movie.Image ?? "" },
                 ["description"] = new AttributeValue { S = movie.Description ?? "" },
