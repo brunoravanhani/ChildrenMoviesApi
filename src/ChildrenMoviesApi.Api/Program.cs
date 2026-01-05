@@ -15,6 +15,12 @@ internal class Program
         builder.Services.AddScoped<ChildrenMoviesApi.Application.Logging.ILogger, CustomLogger>();
         builder.Services.AddScoped<IMoviesApplication, MoviesApplication>();
 
+        builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+        {
+            googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+            googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        });
+
         builder.Services.AddControllers();
 
         builder.Services.AddEndpointsApiExplorer();
