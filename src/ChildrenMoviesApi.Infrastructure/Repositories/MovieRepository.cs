@@ -1,6 +1,6 @@
 using Amazon.DynamoDBv2.Model;
 using ChildrenMoviesApi.Domain.Interfaces;
-using ChildrenMoviesApi.Infrastructure.Mappers;
+using ChildrenMoviesApi.Domain.Mappers;
 using ChildrenMoviesApi.Infrastructure.Interfaces;
 using ChildrenMoviesApi.Domain.Entity;
 using ChildrenMoviesApi.Domain.Configuration;
