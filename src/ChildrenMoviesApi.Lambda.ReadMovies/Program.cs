@@ -4,15 +4,31 @@ using ChildrenMoviesApi.Domain.Configuration;
 using ChildrenMoviesApi.Domain.Mappers;
 using Microsoft.Extensions.Options;
 
+var specificOrigins = "_specificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<DatabaseTables>(builder.Configuration.GetSection("Database"));
+
+var allowedOrigins = builder.Configuration
+    .GetSection("AllowedOrigins")
+    .Get<string[]>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: specificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins(allowedOrigins!);
+                          policy.WithMethods("GET");
+                      });
+});
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
-
-builder.Services.Configure<DatabaseTables>(builder.Configuration.GetSection("Database"));
 
 var app = builder.Build();
 
@@ -23,6 +39,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(specificOrigins);
 
 app.MapGet("/", async (IOptions<DatabaseTables> options) =>
 {
