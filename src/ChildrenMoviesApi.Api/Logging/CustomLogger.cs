@@ -1,8 +1,6 @@
-using ChildrenMoviesApi.Application.Logging;
-
 namespace ChildrenMoviesApi.Api.Logging;
 
-public class CustomLogger : Application.Logging.ILogger
+public class CustomLogger : Core.Logging.ILogger
 {
     public void LogInformation(string message)
     {

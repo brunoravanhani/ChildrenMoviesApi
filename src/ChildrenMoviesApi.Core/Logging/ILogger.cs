@@ -1,4 +1,4 @@
-namespace ChildrenMoviesApi.Application.Logging;
+namespace ChildrenMoviesApi.Core.Logging;
 
 public interface ILogger
 {

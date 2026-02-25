@@ -1,4 +1,5 @@
 using ChildrenMoviesApi.Application.Intefaces;
+using ChildrenMoviesApi.Domain.Dtos;
 using ChildrenMoviesApi.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,35 +17,12 @@ public class MoviesController : ControllerBase
         _moviesApplication = moviesApplication;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> Get()
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] SearchParamsDto dto)
     {
-        var movies = await _moviesApplication.QueryMovies();
+        var movies = await _moviesApplication.Search(dto);
 
         return Ok(movies);
     } 
-
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(Guid id)
-    {
-        var movie = await _moviesApplication.GetMovie(id);
-
-        return Ok(movie);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Post([FromBody] Movie movie)
-    {
-        await _moviesApplication.SaveMovie(movie);
-
-        return Ok($"Movie {movie.Name} added successfully");
-    }
-
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put(Guid id, [FromBody] Movie movie)
-    {
-        await _moviesApplication.UpdateMovie(id, movie);
-
-        return Ok($"Movie {movie.Name} added successfully");
-    } 
+    
 }

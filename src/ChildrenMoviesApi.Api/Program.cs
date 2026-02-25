@@ -1,7 +1,11 @@
+using ChildrenMoviesApi.Api.ErrorHandling;
 using ChildrenMoviesApi.Api.Logging;
+using ChildrenMoviesApi.Application;
 using ChildrenMoviesApi.Application.Intefaces;
 using ChildrenMoviesApi.Application.Services;
-using ChildrenMoviesApi.Domain.Configuration;
+using ChildrenMoviesApi.Core.Configuration;
+using ChildrenMoviesApi.Infra.Tmdb.Configuration;
+using System.Runtime;
 
 internal class Program
 {
@@ -9,16 +13,24 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.Configure<AwsCredentials>(builder.Configuration.GetSection("Aws"));
-        builder.Services.Configure<DatabaseTables>(builder.Configuration.GetSection("Database"));
 
-        builder.Services.AddScoped<ChildrenMoviesApi.Application.Logging.ILogger, CustomLogger>();
-        builder.Services.AddScoped<IMoviesApplication, MoviesApplication>();
+        var tmdbCredentials = new TmdbCredentials();
+        builder.Configuration.GetSection("Tmdb").Bind(tmdbCredentials);
+
+        builder.Services.AddSingleton(tmdbCredentials);
+
+        builder.Services.AddScoped<ChildrenMoviesApi.Core.Logging.ILogger, CustomLogger>();
+        
+        builder.Services.ApplicationDI();
+        builder.Services.TmdbDI();
 
         builder.Services.AddControllers();
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddProblemDetails();
+        builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
         var app = builder.Build();
 

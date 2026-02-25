@@ -1,13 +1,35 @@
+using System;
+
 namespace ChildrenMoviesApi.Domain.Entity;
 
-public class Movie : EntityBase
+public class Movie
 {
-    
-    public string Name { get; set; }
-    public string Image { get; set; }
-    public string Description { get; set; }
-    public int? Year { get; set; }
-    public string Type { get; set; }
-    public IEnumerable<StreamService> Streams { get; set; }
-    public IEnumerable<string> Tags { get; set; }
+    public int Id { get; private set; }
+    public string? BackdropPath { get; private set; }
+    public string? PosterPath { get; private set; }
+    public string? OriginalLanguage { get; private set; }
+    public string? OriginalTitle { get; private set; }
+    public string? Overview { get; private set; }
+    public DateTime? ReleaseDate { get; private set; }
+    public string? Title { get; private set; }
+
+    public Movie(
+        int id,
+        string? backdropPath,
+        string? posterPath,
+        string? originalLanguage,
+        string? originalTitle,
+        string? overview,
+        string? releaseDate,
+        string? title)
+    {
+        Id = id;
+        BackdropPath = backdropPath;
+        PosterPath = posterPath;
+        OriginalLanguage = originalLanguage;
+        OriginalTitle = originalTitle;
+        Overview = overview;
+        ReleaseDate = string.IsNullOrWhiteSpace(releaseDate) ? null : DateTime.Parse(releaseDate!);
+        Title = title;
+    }
 }
