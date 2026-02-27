@@ -3,7 +3,7 @@ using ChildrenMoviesApi.Domain.Entity;
 
 namespace ChildrenMoviesApi.Application.Intefaces;
 
-public interface IMoviesApplication
+public interface IMoviesService
 {
     Task<IEnumerable<Movie>> Search(SearchParamsDto searchParams);
 }

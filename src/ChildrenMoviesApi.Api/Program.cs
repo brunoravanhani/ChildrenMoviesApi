@@ -1,11 +1,11 @@
+using ChildrenMoviesApi.Api.Configuration;
 using ChildrenMoviesApi.Api.ErrorHandling;
 using ChildrenMoviesApi.Api.Logging;
 using ChildrenMoviesApi.Application;
-using ChildrenMoviesApi.Application.Intefaces;
-using ChildrenMoviesApi.Application.Services;
 using ChildrenMoviesApi.Core.Configuration;
 using ChildrenMoviesApi.Infra.Tmdb.Configuration;
-using System.Runtime;
+using ChildrenMoviesApi.Infra.Google.Configuration;
+using System.Text;
 
 internal class Program
 {
@@ -13,16 +13,24 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-
-        var tmdbCredentials = new TmdbCredentials();
-        builder.Configuration.GetSection("Tmdb").Bind(tmdbCredentials);
-
-        builder.Services.AddSingleton(tmdbCredentials);
+        builder.Services.AddApiConfiguration(builder.Configuration);
 
         builder.Services.AddScoped<ChildrenMoviesApi.Core.Logging.ILogger, CustomLogger>();
         
         builder.Services.ApplicationDI();
         builder.Services.TmdbDI();
+        builder.Services.GoogleAuthDI();
+
+        // CORS
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowMoviePoints", policy =>
+            {
+                policy.WithOrigins("localhost:3000", "http://localhost:3000", "https://localhost:3000")
+                      .AllowAnyHeader()
+                      .AllowAnyMethod();
+            });
+        });
 
         builder.Services.AddControllers();
 
@@ -31,6 +39,10 @@ internal class Program
 
         builder.Services.AddProblemDetails();
         builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+        builder.Services.AddBearerAuthentication(builder.Configuration);
+
+        builder.Services.AddAuthorization();
 
         var app = builder.Build();
 
@@ -42,6 +54,11 @@ internal class Program
         }
 
         app.UseHttpsRedirection();
+
+        app.UseCors("AllowMoviePoints");
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.MapControllers();
 

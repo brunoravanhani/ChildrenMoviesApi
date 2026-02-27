@@ -1,7 +1,7 @@
 ﻿using ChildrenMoviesApi.Domain.Dtos;
 using ChildrenMoviesApi.Domain.Entity;
 
-namespace ChildrenMoviesApi.Domain.Interfaces.Gateways;
+namespace ChildrenMoviesApi.Domain.Interfaces.Services;
 
 public interface ISearchMovieGateway
 {

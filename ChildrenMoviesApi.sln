@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11512.155 d18.3
+VisualStudioVersion = 18.3.11512.155
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
 EndProject
@@ -26,6 +26,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{7DC819A7-B808-491F-80A3-9560BF5CBF25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildrenMoviesApi.Core", "src\ChildrenMoviesApi.Core\ChildrenMoviesApi.Core.csproj", "{FAA6C816-A2B8-4BBC-B530-C7CFA980EF6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildrenMoviesApi.Infra.Google", "src\ChildrenMoviesApi.Infra.Google\ChildrenMoviesApi.Infra.Google.csproj", "{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,18 @@ Global
 		{FAA6C816-A2B8-4BBC-B530-C7CFA980EF6F}.Release|x64.Build.0 = Release|Any CPU
 		{FAA6C816-A2B8-4BBC-B530-C7CFA980EF6F}.Release|x86.ActiveCfg = Release|Any CPU
 		{FAA6C816-A2B8-4BBC-B530-C7CFA980EF6F}.Release|x86.Build.0 = Release|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Debug|x64.Build.0 = Debug|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Debug|x86.Build.0 = Debug|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Release|x64.ActiveCfg = Release|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Release|x64.Build.0 = Release|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Release|x86.ActiveCfg = Release|Any CPU
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,6 +150,7 @@ Global
 		{19FECEFD-165B-4C16-9D8E-B8031DEA4B12} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{7DC819A7-B808-491F-80A3-9560BF5CBF25} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{FAA6C816-A2B8-4BBC-B530-C7CFA980EF6F} = {19FECEFD-165B-4C16-9D8E-B8031DEA4B12}
+		{7FF6695C-C9BA-403A-BEC3-17D3F6D42A26} = {7DC819A7-B808-491F-80A3-9560BF5CBF25}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B60AD219-B37B-4AF4-81F7-5A006D88A8AC}

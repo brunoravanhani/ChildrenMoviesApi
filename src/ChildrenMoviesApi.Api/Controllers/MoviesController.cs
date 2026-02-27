@@ -1,18 +1,19 @@
 using ChildrenMoviesApi.Application.Intefaces;
 using ChildrenMoviesApi.Domain.Dtos;
-using ChildrenMoviesApi.Domain.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChildrenMoviesApi.Api.Controllers;
 
+[Authorize]
 [Route("[controller]")]
 [ApiController]
 public class MoviesController : ControllerBase
 {
     
-    private readonly IMoviesApplication _moviesApplication;
+    private readonly IMoviesService _moviesApplication;
 
-    public MoviesController(IMoviesApplication moviesApplication)
+    public MoviesController(IMoviesService moviesApplication)
     {
         _moviesApplication = moviesApplication;
     }

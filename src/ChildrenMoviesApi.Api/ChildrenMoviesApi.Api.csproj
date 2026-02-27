@@ -7,13 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth" Version="1.73.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ChildrenMoviesApi.Application\ChildrenMoviesApi.Application.csproj" />
     <ProjectReference Include="..\ChildrenMoviesApi.Core\ChildrenMoviesApi.Core.csproj" />
     <ProjectReference Include="..\ChildrenMoviesApi.Domain\ChildrenMoviesApi.Domain.csproj" />
+    <ProjectReference Include="..\ChildrenMoviesApi.Infra.Google\ChildrenMoviesApi.Infra.Google.csproj" />
     <ProjectReference Include="..\ChildrenMoviesApi.Infra.Tmdb\ChildrenMoviesApi.Infra.Tmdb.csproj" />
     <ProjectReference Include="..\ChildrenMoviesApi.Infrastructure\ChildrenMoviesApi.Infrastructure.csproj" />
   </ItemGroup>

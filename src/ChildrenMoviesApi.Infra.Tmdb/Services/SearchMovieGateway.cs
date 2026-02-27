@@ -3,7 +3,7 @@ using ChildrenMoviesApi.Core.Exceptions;
 using ChildrenMoviesApi.Core.Logging;
 using ChildrenMoviesApi.Domain.Dtos;
 using ChildrenMoviesApi.Domain.Entity;
-using ChildrenMoviesApi.Domain.Interfaces.Gateways;
+using ChildrenMoviesApi.Domain.Interfaces.Services;
 using ChildrenMoviesApi.Infra.Tmdb.Factory.Interfaces;
 using ChildrenMoviesApi.Infra.Tmdb.Models;
 using System.Text;

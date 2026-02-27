@@ -1,20 +1,18 @@
-using Amazon.Runtime.Internal;
 using ChildrenMoviesApi.Application.Intefaces;
-using ChildrenMoviesApi.Core.Configuration;
 using ChildrenMoviesApi.Core.Logging;
 using ChildrenMoviesApi.Domain.Dtos;
 using ChildrenMoviesApi.Domain.Entity;
-using ChildrenMoviesApi.Domain.Interfaces.Gateways;
-using System.Text.Json;
+using ChildrenMoviesApi.Domain.Interfaces.Services;
+
 namespace ChildrenMoviesApi.Application.Services;
 
-public class MoviesApplication : IMoviesApplication
+internal class MoviesService : IMoviesService
 {
-    private readonly string className = nameof(MoviesApplication);
+    private readonly string className = nameof(MoviesService);
     private readonly ILogger _logger;
     private readonly ISearchMovieGateway _searchMovieGateway;
 
-    public MoviesApplication(ILogger logger, ISearchMovieGateway searchMovieGateway)
+    public MoviesService(ILogger logger, ISearchMovieGateway searchMovieGateway)
     {
         _logger = logger;
         _searchMovieGateway = searchMovieGateway;
