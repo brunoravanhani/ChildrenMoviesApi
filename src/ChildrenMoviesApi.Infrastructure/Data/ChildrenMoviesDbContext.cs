@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ChildrenMoviesApi.Domain.Entity;
 
-namespace ChildrenMoviesApi.Infrastructure.Data;
+namespace ChildrenMoviesApi.Infra.MySQL.Data;
 
 public class ChildrenMoviesDbContext : DbContext
 {

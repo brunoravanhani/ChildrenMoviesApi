@@ -1,11 +1,11 @@
 ﻿using ChildrenMoviesApi.Domain.Interfaces;
-using ChildrenMoviesApi.Infrastructure.Data;
-using ChildrenMoviesApi.Infrastructure.Repositories;
+using ChildrenMoviesApi.Infra.MySQL.Data;
+using ChildrenMoviesApi.Infra.MySQL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ChildrenMoviesApi.Infrastructure;
+namespace ChildrenMoviesApi.Infra.MySQL;
 
 public static class ServiceCollectionExtensionMethods
 {

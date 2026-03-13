@@ -4,7 +4,7 @@ using ChildrenMoviesApi.Api.Logging;
 using ChildrenMoviesApi.Application;
 using ChildrenMoviesApi.Infra.Google.Configuration;
 using ChildrenMoviesApi.Infra.Tmdb.Configuration;
-using ChildrenMoviesApi.Infrastructure;
+using ChildrenMoviesApi.Infra.MySQL;
 
 internal class Program
 {

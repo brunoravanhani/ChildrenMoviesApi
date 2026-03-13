@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ChildrenMoviesApi.Infrastructure.Migrations
+namespace ChildrenMoviesApi.Infra.MySQL.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

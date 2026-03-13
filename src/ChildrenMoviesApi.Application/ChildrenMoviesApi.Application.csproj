@@ -17,7 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ChildrenMoviesApi.Core\ChildrenMoviesApi.Core.csproj" />
     <ProjectReference Include="..\ChildrenMoviesApi.Domain\ChildrenMoviesApi.Domain.csproj" />
-    <ProjectReference Include="..\ChildrenMoviesApi.Infrastructure\ChildrenMoviesApi.Infrastructure.csproj" />
+    <ProjectReference Include="..\ChildrenMoviesApi.Infrastructure\ChildrenMoviesApi.Infra.MySQL.csproj" />
   </ItemGroup>
 
 </Project>

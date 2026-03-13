@@ -1,6 +1,6 @@
 using ChildrenMoviesApi.Domain.Interfaces;
 
-namespace ChildrenMoviesApi.Infrastructure.Repositories;
+namespace ChildrenMoviesApi.Infra.MySQL.Repositories;
 
 internal class MovieRepository : IMovieRepository
 {

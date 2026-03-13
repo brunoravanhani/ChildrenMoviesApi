@@ -19,7 +19,7 @@
     <ProjectReference Include="..\ChildrenMoviesApi.Domain\ChildrenMoviesApi.Domain.csproj" />
     <ProjectReference Include="..\ChildrenMoviesApi.Infra.Google\ChildrenMoviesApi.Infra.Google.csproj" />
     <ProjectReference Include="..\ChildrenMoviesApi.Infra.Tmdb\ChildrenMoviesApi.Infra.Tmdb.csproj" />
-    <ProjectReference Include="..\ChildrenMoviesApi.Infrastructure\ChildrenMoviesApi.Infrastructure.csproj" />
+    <ProjectReference Include="..\ChildrenMoviesApi.Infrastructure\ChildrenMoviesApi.Infra.MySQL.csproj" />
   </ItemGroup>
 
 </Project>
