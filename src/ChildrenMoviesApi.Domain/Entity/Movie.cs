@@ -13,6 +13,8 @@ public class Movie
     public DateTime? ReleaseDate { get; private set; }
     public string? Title { get; private set; }
 
+    protected Movie() { }
+
     public Movie(
         int id,
         string? backdropPath,

@@ -2,10 +2,9 @@ using ChildrenMoviesApi.Api.Configuration;
 using ChildrenMoviesApi.Api.ErrorHandling;
 using ChildrenMoviesApi.Api.Logging;
 using ChildrenMoviesApi.Application;
-using ChildrenMoviesApi.Core.Configuration;
-using ChildrenMoviesApi.Infra.Tmdb.Configuration;
 using ChildrenMoviesApi.Infra.Google.Configuration;
-using System.Text;
+using ChildrenMoviesApi.Infra.Tmdb.Configuration;
+using ChildrenMoviesApi.Infrastructure;
 
 internal class Program
 {
@@ -15,8 +14,10 @@ internal class Program
 
         builder.Services.AddApiConfiguration(builder.Configuration);
 
+        builder.Services.AddInfrastructure(builder.Configuration);
+
         builder.Services.AddScoped<ChildrenMoviesApi.Core.Logging.ILogger, CustomLogger>();
-        
+
         builder.Services.ApplicationDI();
         builder.Services.TmdbDI();
         builder.Services.GoogleAuthDI();
@@ -26,7 +27,7 @@ internal class Program
         {
             options.AddPolicy("AllowMoviePoints", policy =>
             {
-                policy.WithOrigins("localhost:3000", "http://localhost:3000", "https://localhost:3000")
+                policy.WithOrigins("localhost:5173", "http://localhost:5173", "https://localhost:5173")
                       .AllowAnyHeader()
                       .AllowAnyMethod();
             });
@@ -50,7 +51,7 @@ internal class Program
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI(); 
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();
