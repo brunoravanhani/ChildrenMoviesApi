@@ -37,7 +37,7 @@ internal class SearchMovieGateway : ISearchMovieGateway
 
             response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<PaginatedResponseDto<MovieDto>>(body, JsonDefaults.Options);
+            var result = JsonSerializer.Deserialize < PaginatedResponseDto <Models.MovieDto>>(body, JsonDefaults.Options);
             return MapMovie(result);
         }
         catch (HttpRequestException ex)
@@ -62,7 +62,7 @@ internal class SearchMovieGateway : ISearchMovieGateway
         }
     }
 
-    private static IEnumerable<Movie> MapMovie(PaginatedResponseDto<MovieDto>? result)
+    private static IEnumerable<Movie> MapMovie(PaginatedResponseDto<Models.MovieDto>? result)
     {
         return result.Results.Select(x =>
         {

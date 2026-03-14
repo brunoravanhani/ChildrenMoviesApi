@@ -1,4 +1,4 @@
-﻿using ChildrenMoviesApi.Domain.Interfaces;
+﻿using ChildrenMoviesApi.Domain.Interfaces.Repositories;
 using ChildrenMoviesApi.Infra.MySQL.Data;
 using ChildrenMoviesApi.Infra.MySQL.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +15,10 @@ public static class ServiceCollectionExtensionMethods
             options.UseMySql(
                 configuration.GetConnectionString("DefaultConnection"),
                 ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))));
-        
+
         services.AddScoped<IMovieRepository, MovieRepository>();
-        
+        services.AddScoped<IUserMovieRepository, UserMovieRepository>();
+
         return services;
     }
 }

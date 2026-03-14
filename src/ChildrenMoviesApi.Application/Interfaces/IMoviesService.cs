@@ -6,4 +6,6 @@ namespace ChildrenMoviesApi.Application.Intefaces;
 public interface IMoviesService
 {
     Task<IEnumerable<Movie>> Search(SearchParamsDto searchParams);
+    Task<IEnumerable<GalleryMovieDto>> GetAllByUser(string userId);
+    Task AddMovieAsync(AddMovieDto addMovieDto);
 }

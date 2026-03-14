@@ -10,6 +10,7 @@ public class ChildrenMoviesDbContext : DbContext
     }
 
     public DbSet<Movie> Movies { get; set; } = null!;
+    public DbSet<UserMovie> UserMovies { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,6 +31,15 @@ public class ChildrenMoviesDbContext : DbContext
             entity.Property(e => e.BackdropPath).HasMaxLength(500);
             entity.Property(e => e.PosterPath).HasMaxLength(500);
             entity.Property(e => e.ReleaseDate);
+        });
+
+        modelBuilder.Entity<UserMovie>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.UserId).HasMaxLength(100);
+            entity.Property(e => e.MovieId);
+            entity.Property(e => e.Points);
+            entity.Property(e => e.CreatedDate);
         });
     }
 }

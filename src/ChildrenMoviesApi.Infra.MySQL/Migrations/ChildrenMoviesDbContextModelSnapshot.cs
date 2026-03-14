@@ -58,6 +58,44 @@ namespace ChildrenMoviesApi.Infra.MySQL.Migrations
 
                     b.ToTable("Movies");
                 });
+
+            modelBuilder.Entity("ChildrenMoviesApi.Domain.Entity.UserMovie", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("UserMovies");
+                });
+
+            modelBuilder.Entity("ChildrenMoviesApi.Domain.Entity.UserMovie", b =>
+                {
+                    b.HasOne("ChildrenMoviesApi.Domain.Entity.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+                });
 #pragma warning restore 612, 618
         }
     }

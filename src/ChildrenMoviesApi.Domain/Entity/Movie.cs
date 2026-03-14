@@ -1,4 +1,3 @@
-using System;
 
 namespace ChildrenMoviesApi.Domain.Entity;
 

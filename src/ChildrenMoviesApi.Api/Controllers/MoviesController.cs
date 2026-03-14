@@ -2,6 +2,7 @@ using ChildrenMoviesApi.Application.Intefaces;
 using ChildrenMoviesApi.Domain.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ChildrenMoviesApi.Api.Controllers;
 
@@ -24,6 +25,36 @@ public class MoviesController : ControllerBase
         var movies = await _moviesApplication.Search(dto);
 
         return Ok(movies);
-    } 
-    
+    }
+
+    [HttpGet()]
+    public async Task<IActionResult> Get()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized("User ID not found in token");
+        }
+
+        var movies = await _moviesApplication.GetAllByUser(userId);
+
+        return Ok(movies);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddMovie([FromBody] AddMovieDto addMovieDto)
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized("User ID not found in token");
+        }
+
+        addMovieDto.UserId = userId;
+        await _moviesApplication.AddMovieAsync(addMovieDto);
+        return Ok();
+    }
+
 }
