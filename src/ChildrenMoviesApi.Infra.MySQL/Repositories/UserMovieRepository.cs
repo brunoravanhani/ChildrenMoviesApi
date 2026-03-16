@@ -24,6 +24,11 @@ internal class UserMovieRepository : IUserMovieRepository
         return await _context.UserMovies.Include(u => u.Movie).Where(u => u.UserId == userId).ToListAsync();
     }
 
+    public async Task<UserMovie?> GetByMovieAndUserAsync(int movieId, string userId)
+    {
+        return await _context.UserMovies.FirstOrDefaultAsync(um => um.Movie.Id == movieId && um.UserId == userId);
+    }
+
     public async Task AddAsync(UserMovie userMovie)
     {
         await _context.UserMovies.AddAsync(userMovie);

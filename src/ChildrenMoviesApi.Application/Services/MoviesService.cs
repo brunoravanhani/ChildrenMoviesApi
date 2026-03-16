@@ -67,6 +67,43 @@ internal class MoviesService : IMoviesService
         _logger.LogInformation($"Class: {className} | Method: {methodName} | UserMovie added successfully");
     }
 
+    public async Task DeleteMovieAsync(int movieId, string userId)
+    {
+        string methodName = nameof(DeleteMovieAsync);
+        _logger.LogInformation($"Class: {className} | Method: {methodName} | Initializing with MovieId: {movieId}, UserId: {userId}");
+
+        var userMovie = await _userMovieRepository.GetByMovieAndUserAsync(movieId, userId);
+
+        if (userMovie == null)
+        {
+            throw new ArgumentNullException(nameof(userMovie));
+        }
+
+        await _userMovieRepository.DeleteAsync(userMovie);
+        await _userMovieRepository.SaveChangesAsync();
+
+        _logger.LogInformation($"Class: {className} | Method: {methodName} | Movie deleted successfully");
+    }
+
+    public async Task UpdatePointsAsync(int movieId, int points, string userId)
+    {
+        string methodName = nameof(UpdatePointsAsync);
+        _logger.LogInformation($"Class: {className} | Method: {methodName} | Initializing with MovieId: {movieId}, Points: {points}, UserId: {userId}");
+
+        var userMovie = await _userMovieRepository.GetByMovieAndUserAsync(movieId, userId);
+
+        if (userMovie == null)
+        {
+            throw new ArgumentNullException(nameof(userMovie));
+        }
+
+        userMovie.UpdatePoints(points);
+        await _userMovieRepository.SaveChangesAsync();
+
+        _logger.LogInformation($"Class: {className} | Method: {methodName} | Points updated successfully");
+    }
+
+
     private static GalleryMovieDto Map(UserMovie userMovie)
     {
         return new GalleryMovieDto

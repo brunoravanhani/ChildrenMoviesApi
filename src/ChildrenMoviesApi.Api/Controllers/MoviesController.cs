@@ -57,4 +57,32 @@ public class MoviesController : ControllerBase
         return Ok();
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteMovie(int id)
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized("User ID not found in token");
+        }
+
+        await _moviesApplication.DeleteMovieAsync(id, userId);
+        return NoContent();
+    }
+
+    [HttpPut("{id}/points")]
+    public async Task<IActionResult> UpdateMoviePoints(int id, [FromBody] UpdateMoviePointsDto updatePointsDto)
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized("User ID not found in token");
+        }
+
+        await _moviesApplication.UpdatePointsAsync(id, updatePointsDto.Points, userId);
+        return Ok();
+    }
+
 }

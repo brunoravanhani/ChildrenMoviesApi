@@ -25,4 +25,9 @@ public class UserMovie : EntityBase
         };
     }
 
+    public void UpdatePoints(int points)
+    {
+        Points = points;
+    }
+
 }
