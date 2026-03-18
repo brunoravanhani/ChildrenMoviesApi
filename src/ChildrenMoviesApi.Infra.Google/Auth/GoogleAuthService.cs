@@ -31,4 +31,19 @@ internal class GoogleAuthService : IGoogleAuthService
             Email = payload.Email
         };
     }
+
+    public async Task<GoogleUserInfo> GetUserInfoAsync(string userId)
+    {
+        // This is a placeholder implementation. In production, you would need to:
+        // 1. Store user info in your database when they first login
+        // 2. Retrieve it here, or
+        // 3. Use Google's People API to fetch the user info
+        // For now, we'll return a basic user with the provided ID
+        return await Task.FromResult(new GoogleUserInfo
+        {
+            Id = userId,
+            Name = string.Empty,
+            Email = string.Empty
+        });
+    }
 }

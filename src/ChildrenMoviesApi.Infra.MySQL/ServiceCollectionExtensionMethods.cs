@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensionMethods
 
         services.AddScoped<IMovieRepository, MovieRepository>();
         services.AddScoped<IUserMovieRepository, UserMovieRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
         return services;
     }

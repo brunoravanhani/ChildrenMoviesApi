@@ -5,4 +5,5 @@ namespace ChildrenMoviesApi.Domain.Interfaces.Services;
 public interface IGoogleAuthService
 {
     Task<GoogleUserInfo> ValidateTokenAsync(string idToken);
+    Task<GoogleUserInfo> GetUserInfoAsync(string userId);
 }

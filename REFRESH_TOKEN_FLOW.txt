@@ -1,0 +1,147 @@
+// REFRESH TOKEN FLOW DIAGRAM
+
+// 1. GOOGLE LOGIN FLOW
+// =====================
+Client
+  |
+  |-- POST /auth/google { idToken }
+  |
+  |------> AuthController
+             |
+             |------> AuthService.GoogleLoginAsync()
+                       |
+                       |-- GoogleAuthService.ValidateTokenAsync(idToken)
+                       |   [Validates with Google]
+                       |
+                       |-- TokenService.GenerateToken() -> AccessToken (2h expiry)
+                       |
+                       |-- TokenService.GenerateRefreshToken() -> RefreshToken (7d expiry)
+                       |
+                       |-- RefreshTokenRepository.AddAsync()
+                       |   [Save RefreshToken to Database]
+                       |
+                       |-- RefreshTokenRepository.SaveChangesAsync()
+                       |
+                       \-> Return (AccessToken, RefreshToken)
+             |
+             \-> Response: { token, refreshToken }
+  |
+  \-- Client stores both tokens (AccessToken in memory, RefreshToken in secure storage)
+
+
+// 2. API REQUEST WITH ACCESS TOKEN FLOW
+// =======================================
+Client
+  |
+  |-- GET /movies { Authorization: Bearer AccessToken }
+  |
+  |------> MoviesController [Authorized]
+             |
+             \-> Response: Movie list
+
+
+// 3. TOKEN REFRESH FLOW (When AccessToken expires)
+// ==================================================
+Client
+  |
+  |-- POST /auth/refresh { refreshToken }
+  |
+  |------> AuthController
+             |
+             |------> AuthService.RefreshTokenAsync(refreshToken)
+                       |
+                       |-- RefreshTokenRepository.GetValidTokenAsync(refreshToken)
+                       |   [Check if token exists and not revoked/expired]
+                       |
+                       |-- GoogleAuthService.GetUserInfoAsync(userId)
+                       |
+                       |-- TokenService.GenerateToken() -> NewAccessToken
+                       |
+                       |-- TokenService.GenerateRefreshToken() -> NewRefreshToken
+                       |
+                       |-- RefreshTokenRepository.AddAsync(NewRefreshToken)
+                       |
+                       |-- RefreshTokenRepository.RevokeAsync(OldRefreshToken)
+                       |   [Mark old token as revoked]
+                       |
+                       |-- RefreshTokenRepository.SaveChangesAsync()
+                       |
+                       \-> Return (NewAccessToken, NewRefreshToken)
+             |
+             \-> Response: { token, refreshToken }
+  |
+  \-- Client updates tokens
+
+
+// 4. LOGOUT FLOW
+// ==============
+Client
+  |
+  |-- POST /auth/logout { Authorization: Bearer AccessToken, Body: { refreshToken } }
+  |
+  |------> AuthController [Requires Authorization]
+             |
+             |------> AuthService.RevokeRefreshTokenAsync(refreshToken)
+                       |
+                       |-- RefreshTokenRepository.RevokeAsync(refreshToken)
+                       |   [Mark token as revoked with timestamp]
+                       |
+                       |-- RefreshTokenRepository.SaveChangesAsync()
+                       |
+                       \-> Success
+             |
+             \-> Response: { message: "Logged out successfully" }
+  |
+  \-- Client clears tokens
+
+
+// 5. INVALID/EXPIRED REFRESH TOKEN FLOW
+// ======================================
+Client
+  |
+  |-- POST /auth/refresh { refreshToken: "invalid_or_expired" }
+  |
+  |------> AuthController
+             |
+             |------> AuthService.RefreshTokenAsync(refreshToken)
+                       |
+                       |-- RefreshTokenRepository.GetValidTokenAsync(refreshToken)
+                       |   [Returns null - token doesn't exist or is revoked/expired]
+                       |
+                       \-> Return null
+             |
+             \-> Response: 401 Unauthorized { message: "Invalid or expired refresh token" }
+  |
+  \-- Client redirects to login
+
+
+// DATABASE SCHEMA
+// ===============
+
+RefreshTokens Table:
+  +----+-------------------+-----------------------------------+---------------+---------------+-----------------+
+  | Id | UserId            | Token                             | ExpiryDate    | CreatedDate   | RevokedDate     |
+  +----+-------------------+-----------------------------------+---------------+---------------+-----------------+
+  | GUID | google_user_id  | base64_random_string              | 7 days later  | Now           | NULL (if active)|
+  +----+-------------------+-----------------------------------+---------------+---------------+-----------------+
+  
+  Indexes:
+  - Token (UNIQUE) - for fast token lookup
+  - UserId - for finding user's refresh tokens
+
+
+// TOKEN PROPERTIES
+// ================
+
+AccessToken (JWT):
+  - Type: JWT
+  - Expiry: 2 hours
+  - Contains: NameIdentifier, Name, Email
+  - Renewed: On each refresh request
+  
+RefreshToken:
+  - Type: Random base64 string (64 bytes)
+  - Expiry: 7 days
+  - Storage: Database
+  - Renewed: On each refresh request
+  - Revocation: On logout or token refresh

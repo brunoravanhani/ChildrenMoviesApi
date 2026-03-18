@@ -11,11 +11,13 @@ public class ChildrenMoviesDbContext : DbContext
 
     public DbSet<Movie> Movies { get; set; } = null!;
     public DbSet<UserMovie> UserMovies { get; set; } = null!;
+    public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         ConfigureMovieEntity(modelBuilder);
+        ConfigureRefreshTokenEntity(modelBuilder);
     }
 
     private static void ConfigureMovieEntity(ModelBuilder modelBuilder)
@@ -40,6 +42,22 @@ public class ChildrenMoviesDbContext : DbContext
             entity.Property(e => e.MovieId);
             entity.Property(e => e.Points);
             entity.Property(e => e.CreatedDate);
+        });
+    }
+
+    private static void ConfigureRefreshTokenEntity(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<RefreshToken>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.UserId).HasMaxLength(100).IsRequired();
+            entity.Property(e => e.Token).IsRequired();
+            entity.Property(e => e.ExpiryDate).IsRequired();
+            entity.Property(e => e.CreatedDate).IsRequired();
+            entity.Property(e => e.RevokedDate);
+
+            entity.HasIndex(e => e.Token).IsUnique();
+            entity.HasIndex(e => e.UserId);
         });
     }
 }
